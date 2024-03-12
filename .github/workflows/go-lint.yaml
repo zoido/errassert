@@ -1,0 +1,21 @@
+name: "Go: Lint"
+on:
+  workflow_call: {}
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          # golangci/golangci-lint-action has its own cache mechanism.
+          cache: false
+          go-version: '>=1.21'
+
+
+      - name: Run golangci-lint
+        id: golangci-lint
+        uses: golangci/golangci-lint-action@v4
