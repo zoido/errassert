@@ -12,8 +12,8 @@ type TestingT interface {
 	Helper()
 }
 
-// Assert checks if the error is as expected and calls t.Errorf if not.
-func (assertion ErrorAssertion) Assert(t TestingT, err error, _ ...interface{}) {
+// Assert checks if the error is as expected and calls t.Fail if not.
+func (assertion ErrorAssertion) Assert(t TestingT, err error) {
 	t.Helper()
 	if tErr := assertion(err); tErr != nil {
 		t.Log(tErr.Error())
@@ -22,7 +22,7 @@ func (assertion ErrorAssertion) Assert(t TestingT, err error, _ ...interface{}) 
 }
 
 // Require checks if the error is as expected and calls t.FailNow if not.
-func (assertion ErrorAssertion) Require(t TestingT, err error, _ ...interface{}) {
+func (assertion ErrorAssertion) Require(t TestingT, err error) {
 	t.Helper()
 	if tErr := assertion(err); tErr != nil {
 		t.Log(tErr.Error())
