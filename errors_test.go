@@ -151,6 +151,86 @@ type testError struct{}
 
 func (testError) Error() string { return "test error" }
 
+func TestErrorContains(t *testing.T) {
+	type testCase struct {
+		substring string
+		in        error
+		want      error
+	}
+
+	run := func(t *testing.T, tc testCase) {
+		// When
+		got := errassert.ErrorContains(tc.substring)(tc.in)
+
+		// Then
+		if !errEqual(got, tc.want) {
+			t.Errorf("ErrorContains(%v) = %v; want %v", tc.in, got, tc.want)
+		}
+	}
+
+	testCases := map[string]testCase{
+		"nil fails": {
+			substring: "some",
+			in:        nil,
+			want:      errors.New("expected an error containing 'some' but got nil"),
+		},
+		"not matching fails": {
+			substring: "some",
+			in:        errors.New("another error"),
+			want:      errors.New("expected an error containing 'some' but got 'another error'"),
+		},
+		"matching passes": {
+			substring: "contains",
+			in:        errors.New("error that contains substring"),
+			want:      nil,
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) { run(t, tc) })
+	}
+}
+
+func TestErrorStartsWith(t *testing.T) {
+	type testCase struct {
+		prefix string
+		in     error
+		want   error
+	}
+
+	run := func(t *testing.T, tc testCase) {
+		// When
+		got := errassert.ErrorStartsWith(tc.prefix)(tc.in)
+
+		// Then
+		if !errEqual(got, tc.want) {
+			t.Errorf("ErrorStartsWith(%v) = %v; want %v", tc.in, got, tc.want)
+		}
+	}
+
+	testCases := map[string]testCase{
+		"nil fails": {
+			prefix: "some",
+			in:     nil,
+			want:   errors.New("expected an error starting with 'some' but got nil"),
+		},
+		"not matching fails": {
+			prefix: "some",
+			in:     errors.New("another: error"),
+			want:   errors.New("expected an error starting with 'some' but got 'another: error'"),
+		},
+		"matching passes": {
+			prefix: "error: ",
+			in:     errors.New("error: that starts with prefix"),
+			want:   nil,
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) { run(t, tc) })
+	}
+}
+
 func errEqual(a, b error) bool {
 	if a == nil && b == nil {
 		return true
