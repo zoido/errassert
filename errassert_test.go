@@ -13,7 +13,7 @@ func NewMockT() *MockT {
 type MockT struct {
 	failCalled    bool
 	failNowCalled bool
-	logfCalled    bool
+	logCalled     bool
 	logfMsg       string
 }
 
@@ -23,9 +23,11 @@ func (m *MockT) Helper()  {}
 func (m *MockT) FailNow() { m.failNowCalled = true }
 func (m *MockT) Fail()    { m.failCalled = true }
 
-func (m *MockT) Log(msg string) {
-	m.logfCalled = true
-	m.logfMsg = msg
+func (m *MockT) Log(args ...interface{}) {
+	m.logCalled = true
+	if len(args) == 1 {
+		m.logfMsg = args[0].(string)
+	}
 }
 
 func (m MockT) AssertFailed(t *testing.T) {
@@ -58,14 +60,14 @@ func (m MockT) AssertNotFailedNow(t *testing.T) {
 
 func (m MockT) AssertLogfCalled(t *testing.T) {
 	t.Helper()
-	if !m.logfCalled {
+	if !m.logCalled {
 		t.Error("expected Logf to be called but it was not")
 	}
 }
 
 func (m MockT) AssertLogfNotCalled(t *testing.T) {
 	t.Helper()
-	if m.logfCalled {
+	if m.logCalled {
 		t.Error("expected Logf to not be called but it was")
 	}
 }
