@@ -231,6 +231,46 @@ func TestErrorStartsWith(t *testing.T) {
 	}
 }
 
+func TestErrorEndsWith(t *testing.T) {
+	type testCase struct {
+		suffix string
+		in     error
+		want   error
+	}
+
+	run := func(t *testing.T, tc testCase) {
+		// When
+		got := errassert.ErrorEndsWith(tc.suffix)(tc.in)
+
+		// Then
+		if !errEqual(got, tc.want) {
+			t.Errorf("ErrorEndsWith(%v) = %v; want %v", tc.in, got, tc.want)
+		}
+	}
+
+	testCases := map[string]testCase{
+		"nil fails": {
+			suffix: "some",
+			in:     nil,
+			want:   errors.New("expected an error ending with 'some' but got nil"),
+		},
+		"not matching fails": {
+			suffix: "some",
+			in:     errors.New("error: another"),
+			want:   errors.New("expected an error ending with 'some' but got 'error: another'"),
+		},
+		"matching passes": {
+			suffix: "ends with suffix",
+			in:     errors.New("error: that ends with suffix"),
+			want:   nil,
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) { run(t, tc) })
+	}
+}
+
 func errEqual(a, b error) bool {
 	if a == nil && b == nil {
 		return true
