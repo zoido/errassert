@@ -6,7 +6,7 @@ type ErrorAssertion func(error) error
 
 // TestingT defines the subset of testing.TB methods used by errassert.
 type TestingT interface {
-	Log(string)
+	Log(...interface{})
 	Fail()
 	FailNow()
 	Helper()
