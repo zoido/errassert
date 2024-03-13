@@ -11,7 +11,3 @@
 * 🚧 go1.13 ErrorIs/ErrorAs assertions ([#12](https://github.com/zoido/errassert/issues/12)) ([155d565](https://github.com/zoido/errassert/commit/155d5651ffbb69b669e37f249184dfbf6f65a585))
 
 
-### Bug Fixes
-
-* 🩹 do not attempt to be Testify-compatible ([#21](https://github.com/zoido/errassert/issues/21)) ([9f45abc](https://github.com/zoido/errassert/commit/9f45abcc106d965d8a8ecb97f272c6b9e0609c2b))
-* 🩹 fix compatibility with testing.TB ([#20](https://github.com/zoido/errassert/issues/20)) ([0e42ee6](https://github.com/zoido/errassert/commit/0e42ee66ce61b3bfd192d0bb3f47074aa4b81e98))
