@@ -18,7 +18,7 @@ func TestSomeError(t *testing.T) {
 		got := errassert.SomeError()(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("SomeError(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -50,7 +50,7 @@ func TestNoError(t *testing.T) {
 		got := errassert.NilError()(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("NoError(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -84,7 +84,7 @@ func TestErrorIs(t *testing.T) {
 		got := errassert.ErrorIs(target)(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("ErrorIs(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -120,7 +120,7 @@ func TestErrorAs(t *testing.T) {
 		got := errassert.ErrorAs(new(testError))(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("ErrorAs(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -163,7 +163,7 @@ func TestErrorContains(t *testing.T) {
 		got := errassert.ErrorContains(tc.substring)(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("ErrorContains(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -203,7 +203,7 @@ func TestErrorStartsWith(t *testing.T) {
 		got := errassert.ErrorStartsWith(tc.prefix)(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("ErrorStartsWith(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -243,7 +243,7 @@ func TestErrorEndsWith(t *testing.T) {
 		got := errassert.ErrorEndsWith(tc.suffix)(tc.in)
 
 		// Then
-		if !errEqual(got, tc.want) {
+		if !errorEq(got, tc.want) {
 			t.Errorf("ErrorEndsWith(%v) = %v; want %v", tc.in, got, tc.want)
 		}
 	}
@@ -271,12 +271,9 @@ func TestErrorEndsWith(t *testing.T) {
 	}
 }
 
-func errEqual(a, b error) bool {
-	if a == nil && b == nil {
-		return true
-	}
-	if a == nil || b == nil {
-		return false
+func errorEq(a, b error) bool {
+	if b == nil {
+		return a == b
 	}
 	return a.Error() == b.Error()
 }
