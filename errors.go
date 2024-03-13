@@ -24,3 +24,23 @@ func NilError() ErrorAssertion {
 		return nil
 	}
 }
+
+// ErrorIs returns an assertion that checks if the error passes errors.Is check.
+func ErrorIs(expected error) ErrorAssertion {
+	return func(err error) error {
+		if !errors.Is(err, expected) {
+			return fmt.Errorf("expected error to be '%v' but got '%v'", expected, err)
+		}
+		return nil
+	}
+}
+
+// ErrorAs returns an assertion that checks if the error passes errors.As check.
+func ErrorAs(target interface{}) ErrorAssertion {
+	return func(err error) error {
+		if !errors.As(err, target) {
+			return fmt.Errorf("expected error to be '%T' but got '%T'", target, err)
+		}
+		return nil
+	}
+}
