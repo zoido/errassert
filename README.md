@@ -37,14 +37,22 @@ func Test(t *testing.T) {
 			errassert: errassert.NilError(),
 		},
 		"invalid input fails": {
-			in:        "invalid",
+			in:        "invalid input",
 			errassert: errassert.SomeError(),
 		},
-		"empty input fails": {
+		"empty input cause invalid syntax error": {
 			in:        "",
+			// Common basic assertions.
 			errassert: errassert.ErrorEndsWith("invalid syntax"),
 		},
-
+		"invalid input fails with input": {
+			in: "input",
+			// Combine basic assertions.
+			errassert: errassert.Want(
+				errassert.ErrorContains("\"input\""),
+				errassert.ErrorEndsWith("invalid syntax"),
+			),
+		},
 	}
 
 	for name, tc := range testCases {

@@ -43,7 +43,7 @@ func Example() {
 	}
 }
 
-func Example_custom_assertion() {
+func ExampleErrorAssertion_custom() {
 	t := testing.T{} // Provided by the testing package.
 
 	type testCase struct {
@@ -69,6 +69,39 @@ func Example_custom_assertion() {
 				}
 				return nil
 			},
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) { run(t, tc) })
+	}
+}
+
+func ExampleWant() {
+	t := testing.T{} // Provided by the testing package.
+
+	type testCase struct {
+		in        string
+		errassert errassert.ErrorAssertion
+	}
+
+	run := func(t *testing.T, tc testCase) {
+		_, err := strconv.Atoi(tc.in)
+
+		tc.errassert.Require(t, err)
+	}
+
+	testCases := map[string]testCase{
+		"ok": {
+			in:        "42",
+			errassert: errassert.NilError(),
+		},
+		"invalid input": {
+			in: "input",
+			errassert: errassert.Want(
+				errassert.ErrorContains("\"input\""),
+				errassert.ErrorEndsWith("invalid syntax"),
+			),
 		},
 	}
 
