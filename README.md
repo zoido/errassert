@@ -11,6 +11,8 @@
 - set error assertion in a table driven test declaration
 - provides similar experience as Testify's [`ErrorAssertionFunc`](https://pkg.go.dev/github.com/stretchr/testify/assert#ErrorAssertionFunc)
 - define custom error assertions
+- combine assertions with `errassert.Want`
+- support assertions for gRPC status errors
 
 ## Example
 
