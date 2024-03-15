@@ -8,11 +8,6 @@
 * ✨ allow to combine assertions with `Want` ([#23](https://github.com/zoido/errassert/issues/23)) ([c579a57](https://github.com/zoido/errassert/commit/c579a5717e7cfaebc734d14a78d48b87f54af2bd))
 * ✨ support checking gRPC status errors ([#25](https://github.com/zoido/errassert/issues/25)) ([4ceacfc](https://github.com/zoido/errassert/commit/4ceacfc570d99addc645ba925539c93ce0439cda))
 
-
-### Bug Fixes
-
-* ⬆️ bump the go_modules group group with 1 update ([#26](https://github.com/zoido/errassert/issues/26)) ([33b1d47](https://github.com/zoido/errassert/commit/33b1d47f5f22925c4202f125f4cd4b505eb7373b))
-
 ## [0.1.0](https://github.com/zoido/errassert/compare/v0.0.1...v0.1.0) (2024-03-13)
 
 
