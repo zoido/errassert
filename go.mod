@@ -6,4 +6,4 @@ go 1.13
 // We want to use the lowest version possible to avoid pushing dependencies to
 // clients.
 // 1.56.3 is the lowest that is deemed safe by dependabot.
-require google.golang.org/grpc v1.56.3
+require google.golang.org/grpc v1.62.1
