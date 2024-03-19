@@ -10,6 +10,7 @@ updates:
     commit-message:
       prefix: "fix: ⬆️ "
     reviewers: ["zoido"]
+    open-pull-requests-limit: 0 # Only automate security updates for go.mod.    
 
   - package-ecosystem: "github-actions"
     directory: "/"
