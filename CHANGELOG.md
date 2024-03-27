@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/zoido/errassert/compare/v0.2.0...v0.3.0) (2024-03-27)
+
+
+### Features
+
+* 📄 Open under MIT license ([4baa589](https://github.com/zoido/errassert/commit/4baa58934d97e677ce7322f245c28a5c9eca7bb1))
+
 ## [0.2.0](https://github.com/zoido/errassert/compare/v0.1.0...v0.2.0) (2024-03-15)
 
 
