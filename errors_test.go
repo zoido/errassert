@@ -109,6 +109,46 @@ func TestErrorIs(t *testing.T) {
 	}
 }
 
+func TestError(t *testing.T) {
+	type testCase struct {
+		msg  string
+		in   error
+		want error
+	}
+
+	run := func(t *testing.T, tc testCase) {
+		// When
+		got := errassert.Error(tc.msg)(tc.in)
+
+		// Then
+		if !errorEq(got, tc.want) {
+			t.Errorf("Error(%v) = %v; want %v", tc.in, got, tc.want)
+		}
+	}
+
+	testCases := map[string]testCase{
+		"nil fails": {
+			msg:  "expected error",
+			in:   nil,
+			want: errors.New("expected error to be 'expected error' but got '<nil>'"),
+		},
+		"not matching fails": {
+			msg:  "expected error",
+			in:   errors.New("another error"),
+			want: errors.New("expected error to be 'expected error' but got 'another error'"),
+		},
+		"matching passes": {
+			msg:  "expected error",
+			in:   errors.New("expected error"),
+			want: nil,
+		},
+	}
+
+	for name, tc := range testCases {
+		t.Run(name, func(t *testing.T) { run(t, tc) })
+	}
+}
+
 func TestErrorAs(t *testing.T) {
 	type testCase struct {
 		in   error
