@@ -26,6 +26,19 @@ func NilError() ErrorAssertion {
 	}
 }
 
+// Error returns an assertion that checks if the error is equal to the error with the given message.
+func Error(msg string) ErrorAssertion {
+	return func(err error) error {
+		if err == nil {
+			return fmt.Errorf("expected error to be '%s' but got '<nil>'", msg)
+		}
+		if err.Error() != msg {
+			return fmt.Errorf("expected error to be '%s' but got '%v'", msg, err)
+		}
+		return nil
+	}
+}
+
 // ErrorIs returns an assertion that checks if the error passes errors.Is check.
 func ErrorIs(expected error) ErrorAssertion {
 	return func(err error) error {
