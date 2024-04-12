@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.4.0](https://github.com/zoido/errassert/compare/v0.3.0...v0.4.0) (2024-04-12)
+
+
+### Features
+
+* ✨ support simple message equality check ([#35](https://github.com/zoido/errassert/issues/35)) ([bb2f95e](https://github.com/zoido/errassert/commit/bb2f95e8149bafb53e426571c9d61b251913c9d0))
+
 ## [0.3.0](https://github.com/zoido/errassert/compare/v0.2.0...v0.3.0) (2024-03-27)
 
 
