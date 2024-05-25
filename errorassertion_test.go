@@ -66,6 +66,21 @@ func TestErrorAssertion_Require_Fail(t *testing.T) {
 	mockT.AssertLogfCalledWith(t, failMsg)
 }
 
+func TestErrorAssertion_NilFunctional(t *testing.T) {
+	// Given
+	mockT := NewMockT()
+	var assertion errassert.ErrorAssertion
+
+	// When
+	assertion.Assert(mockT, anError)
+	assertion.Require(mockT, anError)
+
+	// Then
+	mockT.AssertNotFailed(t)
+	mockT.AssertNotFailedNow(t)
+	mockT.AssertLogfNotCalled(t)
+}
+
 func passAssertion(error) error {
 	return nil
 }
