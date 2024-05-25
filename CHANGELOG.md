@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.0](https://github.com/zoido/errassert/compare/v0.4.0...v0.5.0) (2024-05-25)
+
+
+### Features
+
+* ✨ make `nil` `ErrorAssertion` a valid option ([#40](https://github.com/zoido/errassert/issues/40)) ([93decab](https://github.com/zoido/errassert/commit/93decabf59848194887e8e5405200de442ab23ed))
+
 ## [0.4.0](https://github.com/zoido/errassert/compare/v0.3.0...v0.4.0) (2024-04-12)
 
 
