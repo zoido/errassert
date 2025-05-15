@@ -7,7 +7,7 @@ import (
 	"github.com/zoido/errassert"
 )
 
-var anError = errors.New("an error")
+var anError = errors.New("an error") //nolint:staticcheck // So far this is better name for our purpose then errSomething.
 
 func TestErrorAssertion_Assert_Pass(t *testing.T) {
 	// Given
