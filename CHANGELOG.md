@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.5.1](https://github.com/zoido/errassert/compare/v0.5.0...v0.5.1) (2026-05-11)
+
+
+### Bug Fixes
+
+* ⬆️ bump google.golang.org/grpc from 1.56.3 to 1.79.3 in the go_modules group across 1 directory ([#51](https://github.com/zoido/errassert/issues/51)) ([37ade15](https://github.com/zoido/errassert/commit/37ade1594bc6794a4a23993845e27b2a4ff65db0))
+
 ## [0.5.0](https://github.com/zoido/errassert/compare/v0.4.0...v0.5.0) (2024-05-25)
 
 
