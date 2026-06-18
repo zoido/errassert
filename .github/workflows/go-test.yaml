@@ -46,7 +46,7 @@ jobs:
             ./...
 
       - name: Collect Code Coverage
-        uses: codecov/codecov-action@v6
+        uses: codecov/codecov-action@v7
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: zoido/errassert
