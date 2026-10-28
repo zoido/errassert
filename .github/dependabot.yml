@@ -8,9 +8,8 @@ updates:
     schedule:
       interval: "daily"
     commit-message:
-      prefix: "fix: ⬆️ "
-    reviewers: ["zoido"]
-    open-pull-requests-limit: 0 # Only automate security updates for go.mod.    
+      prefix: "fix(deps): ⬆️ "
+    open-pull-requests-limit: 0 # Only automate security updates for go.mod.
 
   - package-ecosystem: "github-actions"
     directory: "/"
@@ -18,4 +17,3 @@ updates:
       interval: "daily"
     commit-message:
       prefix: "ci: ⬆️ "
-    reviewers: ["zoido"]
