@@ -2,10 +2,14 @@ name: "Go: Build"
 on:
   workflow_call: {}
 
+permissions: {}
+
 jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v7
 

@@ -4,7 +4,11 @@ on:
     branches: [main]
   pull_request:
 
+permissions: {}
+
 jobs:
   lint:
     name: "Markdown: Lint"
     uses: ./.github/workflows/markdown-lint.yaml
+    permissions:
+      contents: read

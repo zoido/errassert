@@ -4,17 +4,25 @@ on:
     branches: [main]
   pull_request:
 
+permissions: {}
+
 jobs:
   lint:
     name: "Go: Lint"
     uses: ./.github/workflows/go-lint.yaml
+    permissions:
+      contents: read
 
   build:
     name: "Go: Build"
     uses: ./.github/workflows/go-build.yaml
+    permissions:
+      contents: read
 
   test:
     name: "Go: Test"
     uses: ./.github/workflows/go-test.yaml
+    permissions:
+      contents: read
 
     secrets: inherit
