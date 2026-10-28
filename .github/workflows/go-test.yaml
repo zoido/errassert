@@ -2,10 +2,14 @@ name: "Go: Test"
 on:
   workflow_call: {}
 
+permissions: {}
+
 jobs:
   test:
     name: Test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     steps:
       - uses: actions/checkout@v7
 
