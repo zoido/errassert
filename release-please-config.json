@@ -1,15 +1,24 @@
 {
   "packages": {
     ".": {
+      "component": "errassert",
+      "include-component-in-tag": false,
       "changelog-path": "CHANGELOG.md",
       "release-type": "go",
-      "draft-pull-request": true
+      "exclude-paths": ["grpcerrassert"]
+    },
+    "grpcerrassert": {
+      "component": "grpcerrassert",
+      "include-component-in-tag": true,
+      "tag-separator": "/",
+      "changelog-path": "CHANGELOG.md",
+      "release-type": "go"
     }
   },
   "pull-request-title-pattern": "chore${scope}: 🔖 release${component} ${version}",
-  "bump-minor-pre-major": true,
   "separate-pull-requests": true,
   "draft-pull-request": true,
+  "bootstrap-sha": "92a5312",
   "plugins": [
     "sentence-case"
   ],

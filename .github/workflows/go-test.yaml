@@ -6,10 +6,14 @@ permissions: {}
 
 jobs:
   test:
-    name: Test
+    name: Test (${{ matrix.module }})
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      fail-fast: false
+      matrix:
+        module: [".", "grpcerrassert"]
     steps:
       - uses: actions/checkout@v7
 
@@ -32,17 +36,18 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-build }}
-          key: ${{ runner.os }}-gobuild-test-${{ github.sha }}
+          key: ${{ runner.os }}-gobuild-test-${{ matrix.module }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-gobuild-test
+            ${{ runner.os }}-gobuild-test-${{ matrix.module }}-
 
       - name: Go Mod Cache
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-mod }}
-          key: ${{ runner.os }}-gomod-test-${{ hashFiles('**/go.sum') }}
+          key: ${{ runner.os }}-gomod-test-${{ matrix.module }}-${{ hashFiles(format('{0}/go.mod', matrix.module), format('{0}/go.sum', matrix.module)) }}
 
-      - run: |
+      - working-directory: ${{ matrix.module }}
+        run: |
           go test -v \
             -coverprofile=coverage.txt \
             -covermode=atomic \
@@ -54,3 +59,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: zoido/errassert
+          files: ${{ matrix.module }}/coverage.txt
+          flags: ${{ matrix.module == '.' && 'errassert' || matrix.module }}

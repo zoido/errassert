@@ -4,7 +4,9 @@
 version: 2
 updates:
   - package-ecosystem: "gomod"
-    directory: "/"
+    directories:
+      - "/"
+      - "/grpcerrassert"
     schedule:
       interval: "daily"
     commit-message:
