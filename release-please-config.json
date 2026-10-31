@@ -20,6 +20,7 @@
   "pull-request-title-pattern": "chore${scope}: 🔖 release${component} ${version}",
   "separate-pull-requests": true,
   "draft-pull-request": true,
+  "always-update": true,
   "last-release-sha": "92a53121f7a16fc6428f6c5c06bfa490e3f3b0c5",
   "plugins": [
     "sentence-case"
