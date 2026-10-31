@@ -6,14 +6,18 @@ permissions: {}
 
 jobs:
   lint:
-    name: Lint (${{ matrix.module }})
+    name: Lint (${{ matrix.name }})
     runs-on: ubuntu-latest
     permissions:
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        module: [".", "grpcerrassert"]
+        include:
+          - name: errassert
+            dir: .
+          - name: grpcerrassert
+            dir: grpcerrassert
     steps:
       - uses: actions/checkout@v7
 
@@ -26,4 +30,4 @@ jobs:
         uses: golangci/golangci-lint-action@v9
         with:
           version: v2.15
-          working-directory: ${{ matrix.module }}
+          working-directory: ${{ matrix.dir }}

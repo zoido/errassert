@@ -6,14 +6,18 @@ permissions: {}
 
 jobs:
   test:
-    name: Test (${{ matrix.module }})
+    name: Test (${{ matrix.name }})
     runs-on: ubuntu-latest
     permissions:
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        module: [".", "grpcerrassert"]
+        include:
+          - name: errassert
+            dir: .
+          - name: grpcerrassert
+            dir: grpcerrassert
     steps:
       - uses: actions/checkout@v7
 
@@ -36,17 +40,17 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-build }}
-          key: ${{ runner.os }}-gobuild-test-${{ matrix.module }}-${{ github.sha }}
+          key: ${{ runner.os }}-gobuild-test-${{ matrix.name }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-gobuild-test-${{ matrix.module }}-
+            ${{ runner.os }}-gobuild-test-${{ matrix.name }}-
 
       - name: Go Mod Cache
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-mod }}
-          key: ${{ runner.os }}-gomod-test-${{ matrix.module }}-${{ hashFiles(format('{0}/go.mod', matrix.module), format('{0}/go.sum', matrix.module)) }}
+          key: ${{ runner.os }}-gomod-test-${{ matrix.name }}-${{ hashFiles(format('{0}/go.mod', matrix.dir), format('{0}/go.sum', matrix.dir)) }}
 
-      - working-directory: ${{ matrix.module }}
+      - working-directory: ${{ matrix.dir }}
         run: |
           go test -v \
             -coverprofile=coverage.txt \
@@ -59,5 +63,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: zoido/errassert
-          files: ${{ matrix.module }}/coverage.txt
-          flags: ${{ matrix.module == '.' && 'errassert' || matrix.module }}
+          files: ${{ matrix.dir }}/coverage.txt
+          flags: ${{ matrix.name }}

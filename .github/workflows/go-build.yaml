@@ -6,14 +6,18 @@ permissions: {}
 
 jobs:
   build:
-    name: Build (${{ matrix.module }})
+    name: Build (${{ matrix.name }})
     runs-on: ubuntu-latest
     permissions:
       contents: read
     strategy:
       fail-fast: false
       matrix:
-        module: [".", "grpcerrassert"]
+        include:
+          - name: errassert
+            dir: .
+          - name: grpcerrassert
+            dir: grpcerrassert
     steps:
       - uses: actions/checkout@v7
 
@@ -35,16 +39,16 @@ jobs:
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-build }}
-          key: ${{ runner.os }}-gobuild-build-${{ matrix.module }}-${{ github.sha }}
+          key: ${{ runner.os }}-gobuild-build-${{ matrix.name }}-${{ github.sha }}
           restore-keys: |
-            ${{ runner.os }}-gobuild-build-${{ matrix.module }}-
+            ${{ runner.os }}-gobuild-build-${{ matrix.name }}-
 
       - name: Go Mod Cache
         uses: actions/cache@v6
         with:
           path: ${{ steps.go-cache-paths.outputs.go-mod }}
-          key: ${{ runner.os }}-gomod-build-${{ matrix.module }}-${{ hashFiles(format('{0}/go.mod', matrix.module), format('{0}/go.sum', matrix.module)) }}
+          key: ${{ runner.os }}-gomod-build-${{ matrix.name }}-${{ hashFiles(format('{0}/go.mod', matrix.dir), format('{0}/go.sum', matrix.dir)) }}
 
-      - working-directory: ${{ matrix.module }}
+      - working-directory: ${{ matrix.dir }}
         run: |
           go build -v ./...
