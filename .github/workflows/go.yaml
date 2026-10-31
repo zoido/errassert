@@ -26,3 +26,16 @@ jobs:
       contents: read
 
     secrets: inherit
+
+  all-checks-pass:
+    name: "Go: All Checks Pass"
+    runs-on: ubuntu-latest
+    needs: [lint, build, test]
+    if: always()
+    permissions: {}
+    steps:
+      - env:
+          NEEDS: ${{ toJSON(needs) }}
+        run: |
+          echo "$NEEDS" | jq -r 'to_entries[] | "\(.key): \(.value.result)"'
+          echo "$NEEDS" | jq -e 'all(.[]; .result == "success")' > /dev/null
